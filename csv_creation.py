@@ -34,10 +34,9 @@ def yed(np_img):
             position_count += len(np_img.T) - index
     return edge_count, position_count
 
-
 def tl2(filepath):
     img = Image.open(filepath)
-    base_width = 27
+    base_width = 45
     wpercent = (base_width / float(img.size[0]))
     hsize = int((float(img.size[1]) * float(wpercent)))
     img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
@@ -50,13 +49,13 @@ def tl2(filepath):
     on_pixels = np.array(on_pixels).T  # added later
 
     # tutaj uznalem ze moze lepiej bedzie najpierw policzyc koordynaty wszystkie a potem dopiero je znormalizowac
-    xbox = (np.max(on_pixels[:, 1]) - np.min(on_pixels[:, 1])) / 2
-    ybox = (np.max(on_pixels[:, 0]) - np.min(on_pixels[:, 0])) / 2
+    xbox = (np.max(on_pixels[:, 1]) + np.min(on_pixels[:, 1])) / 2
+    ybox = (np.max(on_pixels[:, 0]) + np.min(on_pixels[:, 0])) / 2
     width = np.max(on_pixels[:, 1]) - np.min(on_pixels[:, 1])
     height = np.max(on_pixels[:, 0]) - np.min(on_pixels[:, 0])
     onpix = len(on_pixels)
-    xbar = (np.mean(on_pixels[:, 1]) - (xbox + 0.5 * width)) / width
-    ybar = (np.mean(on_pixels[:, 0]) - (ybox + 0.5 * height)) / height
+    xbar = (np.mean(on_pixels[:, 1]) - xbox) / width
+    ybar = (np.mean(on_pixels[:, 0]) - ybox) / height
 
     # zmienne pomocnicze
     xd_square = []  # kwadraty odleglosci od srodka pudelka poziome i pionowe
@@ -68,10 +67,10 @@ def tl2(filepath):
     x2y_d = []
     xy2_d = []
     for i in range(len(on_pixels[:, 1])):
-        xd_square.append((on_pixels[:, 1][i] - (xbox + 0.5 * width)) ** 2)
-        yd_square.append((on_pixels[:, 0][i] - (ybox + 0.5 * height)) ** 2)
-        x_distance.append((on_pixels[:, 1][i] - (xbox + 0.5 * width)))
-        y_distance.append((on_pixels[:, 0][i] - (ybox + 0.5 * height)))
+        xd_square.append((on_pixels[:, 1][i] - xbox) ** 2)
+        yd_square.append((on_pixels[:, 0][i] - ybox) ** 2)
+        x_distance.append((on_pixels[:, 1][i] - xbox))
+        y_distance.append((on_pixels[:, 0][i] - ybox))
         xy_distance.append(x_distance[i] * y_distance[i])
         x2y_d.append(xd_square[i] * y_distance[i])
         xy2_d.append(yd_square[i] * x_distance[i])
