@@ -6,9 +6,9 @@ from PIL import Image
 def xed(np_img):
     edge_count = 0
     position_count = 0
-    for row in enumerate(np_img):
+    for index, row in enumerate(np_img):
         prev_pixel = 0
-        for index, pixel in row:
+        for pixel in row:
             if pixel < 255 and prev_pixel == 255:
                 edge_count += 1
                 position_count += len(np_img) - index
@@ -44,11 +44,7 @@ def tl2(filepath):
 
     img_gs = img.convert("L")
     np_img = np.array(img_gs)
-    for i, j in np.ndenumerate(np_img):
-        if np_img[i][j] > 127:
-            np_imp[i][j] = 255
-        else:
-            np_imp[i][j] = 0
+    #np_img = np.where(np_img <= 127, 0, 255)
 
     on_pixels = np.where(np_img < 255)
     on_pixels = np.array(on_pixels).T  # added later
@@ -96,7 +92,7 @@ def tl2(filepath):
 
 
 directory = 'literki'
-file_csv = open('letter-recognition-new.csv', 'a')
+file_csv = open('letter-recognition-new.csv', 'w')
 file_csv.write('letter,xbox,ybox,width,height,onpix,xbar,ybar,x2bar,y2bar,xybar,x2ybar,xy2bar,xedge,xedgey,yedge,yedgex')
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
