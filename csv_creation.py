@@ -34,16 +34,30 @@ def yed(np_img):
             position_count += len(np_img.T) - index
     return edge_count, position_count
 
-def tl2(filepath):
-    img = Image.open(filepath)
+
+def data_processing(img):
     base_width = 45
     wpercent = (base_width / float(img.size[0]))
     hsize = int((float(img.size[1]) * float(wpercent)))
     img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
 
+    threshold = 127
     img_gs = img.convert("L")
+    img_gs = img_gs.point(lambda p: 255 if p > threshold else 0)
+
     np_img = np.array(img_gs)
-    #np_img = np.where(np_img <= 127, 0, 255)
+    return np_img
+
+def tl2(filepath):
+    img = Image.open(filepath)
+    #base_width = 45
+    #wpercent = (base_width / float(img.size[0]))
+    #hsize = int((float(img.size[1]) * float(wpercent)))
+    #img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
+
+    #img_gs = img.convert("L")
+    #np_img = np.array(img_gs)
+    np_img = data_processing(img)
 
     on_pixels = np.where(np_img < 255)
     on_pixels = np.array(on_pixels).T  # added later
