@@ -9,7 +9,7 @@ def xed(np_img):
     for index, row in enumerate(np_img):
         prev_pixel = 0
         for pixel in row:
-            if pixel < 255 and prev_pixel == 255:
+            if pixel == 255 and prev_pixel < 255:
                 edge_count += 1
                 position_count += len(np_img) - index
             prev_pixel = pixel
@@ -25,7 +25,7 @@ def yed(np_img):
     for index, col in enumerate(np_img.T):
         prev_pixel = 0
         for pixel in reversed(col):
-            if pixel < 255 and prev_pixel == 255:
+            if pixel == 255 and prev_pixel < 255:
                 edge_count += 1
                 position_count += len(np_img.T) - index
             prev_pixel = pixel
