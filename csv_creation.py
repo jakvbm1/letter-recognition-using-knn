@@ -27,11 +27,11 @@ def yed(np_img):
         for pixel in reversed(col):
             if pixel == 255 and prev_pixel < 255:
                 edge_count += 1
-                position_count += len(np_img.T) - index
+                position_count +=  index
             prev_pixel = pixel
         if prev_pixel < 255:  # jezeli ostatni pixel jest "on" to doliczam tez krawedz z granica
             edge_count += 1
-            position_count += len(np_img.T) - index
+            position_count +=  index
     return edge_count, position_count
 
 
