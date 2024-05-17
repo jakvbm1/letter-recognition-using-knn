@@ -67,7 +67,7 @@ def tl2(filepath):
     ybox = (np.max(on_pixels[:, 0]) + np.min(on_pixels[:, 0])) / 2
     width = np.max(on_pixels[:, 1]) - np.min(on_pixels[:, 1])
     height = np.max(on_pixels[:, 0]) - np.min(on_pixels[:, 0])
-    onpix = len(on_pixels)
+    onpix = len(on_pixels[:, 0])
     xbar = (np.mean(on_pixels[:, 1]) - xbox) / width
     ybar = (np.mean(on_pixels[:, 0]) - ybox) / height
 
