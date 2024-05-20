@@ -7,13 +7,13 @@ def xed(np_img):
     edge_count = 0
     position_count = 0
     for index, row in enumerate(np_img):
-        prev_pixel = 0
+        prev_pixel = 255
         for pixel in row:
             if pixel == 255 and prev_pixel < 255:
                 edge_count += 1
                 position_count += len(np_img) - index
             prev_pixel = pixel
-        if prev_pixel < 255:  # jezeli ostatni pixel jest "on" to doliczam tez krawedz z granica
+        if prev_pixel < 255:  
             edge_count += 1
             position_count += len(np_img) - index
     return edge_count, position_count
@@ -23,13 +23,13 @@ def yed(np_img):
     edge_count = 0
     position_count = 0
     for index, col in enumerate(np_img.T):
-        prev_pixel = 0
+        prev_pixel = 255
         for pixel in reversed(col):
             if pixel == 255 and prev_pixel < 255:
                 edge_count += 1
                 position_count +=  index
             prev_pixel = pixel
-        if prev_pixel < 255:  # jezeli ostatni pixel jest "on" to doliczam tez krawedz z granica
+        if prev_pixel < 255:  
             edge_count += 1
             position_count +=  index
     return edge_count, position_count
@@ -50,17 +50,9 @@ def data_processing(img):
 
 def tl2(filepath):
     img = Image.open(filepath)
-    #base_width = 45
-    #wpercent = (base_width / float(img.size[0]))
-    #hsize = int((float(img.size[1]) * float(wpercent)))
-    #img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
-
-    #img_gs = img.convert("L")
-    #np_img = np.array(img_gs)
     np_img = data_processing(img)
-
     on_pixels = np.where(np_img < 255)
-    on_pixels = np.array(on_pixels).T  # added later
+    on_pixels = np.array(on_pixels).T 
 
     # tutaj uznalem ze moze lepiej bedzie najpierw policzyc koordynaty wszystkie a potem dopiero je znormalizowac
     xbox = (np.max(on_pixels[:, 1]) + np.min(on_pixels[:, 1])) / 2
