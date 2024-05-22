@@ -1,5 +1,5 @@
 import os
-from csv_creation import yed, xed, data_processing, tl2
+from functions import tl2
 import pandas
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
