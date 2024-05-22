@@ -34,7 +34,7 @@ if choice == 'f':
         knn_lib=KNeighborsClassifier(6)
         knn_lib.fit(x, y)
         letter = filename[len(filename)-5]
-        print(f"{letter}\t{knn_lib.predict(to_pred)}")
+        print(f"Wartość przewidziana: {knn_lib.predict(to_pred)[0]}")
 
 elif choice == 'p':
     filename = input("Podaj ścieżkę do pliku obrazu: ")
@@ -61,4 +61,4 @@ elif choice == 'p':
     knn_lib = KNeighborsClassifier(6)
     knn_lib.fit(x, y)
     letter = filename[len(filename) - 5]
-    print(f"{letter}\t{knn_lib.predict(to_pred)}")
+    print(f"Wartość przewidziana: {knn_lib.predict(to_pred)[0]}")
